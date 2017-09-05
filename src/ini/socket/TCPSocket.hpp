@@ -5,6 +5,7 @@
 #include "Sockets.hpp"
 
 #include <string>
+#include <vector>
 
 class TCPSocket
 {
