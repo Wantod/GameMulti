@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "client.h"
+#include "core\Window.hpp"
 
 static void init(void)
 {
@@ -128,6 +129,15 @@ static void write_server(SOCKET sock, SOCKADDR_IN *sin, const char *buffer)
 
 int main(int argc, char **argv)
 {
+   Window win;
+   GLFWwindow*_window = win.init_glfw("Test", 200, 200);
+
+   while (_window != nullptr && !glfwWindowShouldClose(_window)) {
+      // Check and call events
+      glfwPollEvents();
+   }
+
+   system("PAUSE");
    if(argc < 2)
    {
       printf("Usage : %s [address] [pseudo]\n", argv[0]);
