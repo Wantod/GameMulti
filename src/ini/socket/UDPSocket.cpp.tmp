@@ -40,7 +40,7 @@ bool UDPSocket::bind() {
 	server.sin_port = htons(PORT); // toujours penser à traduire le port en réseau
 	server.sin_family = AF_INET; // notre socket est UDP
 
-	if (bind(sock, (SOCKADDR *)&server, sizeof(server)) == SOCKET_ERROR)
+	if (::bind(sock, (SOCKADDR *)&server, sizeof(server)) == SOCKET_ERROR)
 	{
 		std::cout << "Erreur bind : " << Sockets::GetError();
 		return false;
@@ -50,14 +50,14 @@ bool UDPSocket::bind() {
 }
 
 bool UDPSocket::wait() {
-	fd_set rdfs;
+	fd_set readset;
 	timeval timeout = { 0 };
 	int selectRedy;
 
-	FD_ZERO(&rdfs);
+	FD_ZERO(&readset);
 
-	FD_SET(sock, &rdfs);
-	selectRedy = select(sock + 1, &rdfs, nullptr, nullptr, &timeout);
+	FD_SET(sock, &readset);
+	selectRedy = select(sock + 1, &readset, nullptr, nullptr, &timeout);
 	if (selectRedy == -1)
 	{
 		std::cout << "Erreur select : " << Sockets::GetError() << std::endl;
@@ -65,7 +65,7 @@ bool UDPSocket::wait() {
 	}
 	else if (selectRedy > 0)
 	{
-		if (FD_ISSET(sock, &rdfs))
+		if (FD_ISSET(sock, &readset))
 		{
 			return true;
 		}

@@ -198,3 +198,16 @@ int main(int argc, char **argv)
 
 	return EXIT_SUCCESS;
 }
+
+void initPort()
+{
+	/*
+	struct sockaddr_in sin2;
+	int addrlen = sizeof(sin2);
+	if (getsockname(sock, (struct sockaddr *)&sin2, &addrlen) == 0 &&
+		sin2.sin_family == AF_INET &&
+		addrlen == sizeof(sin2))
+	{
+		int local_port = ntohs(sin2.sin_port);
+	}*/
+}
