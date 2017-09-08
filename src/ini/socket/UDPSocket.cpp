@@ -17,7 +17,7 @@ bool UDPSocket::init() {
 	}
 
 	// init socket
-	SOCKET sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP); // ipv4, UDP
+	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP); // ipv4, UDP
 	if (sock == INVALID_SOCKET)
 	{
 		std::cout << "Erreur initialisation socket : " << Sockets::GetError();
