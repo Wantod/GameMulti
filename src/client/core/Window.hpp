@@ -13,13 +13,14 @@
 # include <thread>
 # include <chrono>
 # include <thread>
-
 # include <cstdint> // pour uint8_t
+
+# include "Input.hpp"
 
 class Window
 {
 public:
-	Window();
+	Window(Input *input);
 	~Window();
 
 	GLFWwindow* init_glfw(const char *title, int width, int height);
@@ -36,13 +37,20 @@ public:
 
 	static void drop_callback(GLFWwindow* window, int count, const char** paths);
 	static void character_callback(GLFWwindow* window, unsigned int codepoint);
-	static void Window::fenetre_window_pos_callback(GLFWwindow* window, int xpos, int ypos);
+	static void fenetre_window_pos_callback(GLFWwindow* window, int xpos, int ypos);
+	static void window_iconify_callback(GLFWwindow* window, int iconified);
 
+	void setDimansion(int width, int height);
+	bool closeButton();
+	void displayCursor(bool value);
+
+	Input *input;
 protected:
 	GLFWwindow* _window;
-	int _with;
-	int height;
 	int fullscreen;
+
+	int _width;
+	int _height;
 };
 
 #endif // !WINDOW_HPP

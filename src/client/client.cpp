@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "client.h"
-#include "core\Window.hpp"
+#include "core\GameManager.hpp"
 
 static void init(void)
 {
@@ -129,13 +129,7 @@ static void write_server(SOCKET sock, SOCKADDR_IN *sin, const char *buffer)
 
 int main(int argc, char **argv)
 {
-   Window win;
-   GLFWwindow*_window = win.init_glfw("Test", 200, 200);
-
-   while (_window != nullptr && !glfwWindowShouldClose(_window)) {
-      // Check and call events
-      glfwPollEvents();
-   }
+   GameManager game;
 
    system("PAUSE");
    if(argc < 2)

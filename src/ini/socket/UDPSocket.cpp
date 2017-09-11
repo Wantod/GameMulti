@@ -33,11 +33,11 @@ bool UDPSocket::init() {
 	return true;
 }
 
-bool UDPSocket::bind() {
+bool UDPSocket::bind(int port) {
 	SOCKADDR_IN server;
 	server.sin_addr.s_addr = INADDR_ANY;  // indique que toutes les sources seront acceptées
 										  // UTILE: si le port est 0 il est assigné automatiquement
-	server.sin_port = htons(PORT); // toujours penser à traduire le port en réseau
+	server.sin_port = htons(port); // toujours penser à traduire le port en réseau
 	server.sin_family = AF_INET; // notre socket est UDP
 
 	if (::bind(sock, (SOCKADDR *)&server, sizeof(server)) == SOCKET_ERROR)
@@ -74,20 +74,20 @@ bool UDPSocket::wait() {
 	return false;
 }
 
-int UDPSocket::recv(Address &sender, void *data, int size) {
-	if (!this.wait())
+int UDPSocket::recv(int &sender, char *data, int size) {
+	if (!wait())
 		return -1;
 	SOCKADDR_IN address = { 0 };
 
 	/* a client is talking */
 	int n = 0;
-	int sinsize = sizeof *sin;
+	int sinsize = sizeof address;
 
-	if ((n = recvfrom(sock, buffer, BUF_SIZE - 1, 0, (SOCKADDR *)address, &sinsize)) < 0)
+	if ((n = recvfrom(sock, data, size - 1, 0, (SOCKADDR *)&address, &sinsize)) < 0)
 	{
 		return -1;
 	}
-	buffer[n] = 0;
+	data[n] = 0;
 
 	uint32_t ip = ntohl(address.sin_addr.s_addr);
 	uint16_t port = ntohs(address.sin_port);

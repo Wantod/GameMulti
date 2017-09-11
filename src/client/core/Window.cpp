@@ -1,7 +1,8 @@
 #include "Window.hpp"
 #include <string>
+#include <SOIL.h>
 
-Window::Window() : _with(800), height(600), fullscreen(false), _window(nullptr)
+Window::Window(Input *_input) : _width(800), _height(600), fullscreen(false), _window(nullptr), input(_input)
 {
 
 }
@@ -19,12 +20,13 @@ void Window::fenetre_key_callback(GLFWwindow* window, int key, int scancode, int
 {
 	std::cout << "appuyer sur " << key << std::endl;
 	Window* obj = (Window*)glfwGetWindowUserPointer(window);
-	//input.keyUpdate(key, scancode, action, mode);
+	obj->input->keyUpdate(key, scancode, action, mode);
 }
 
 void Window::fenetre_mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-	// input.mouseUpdate(button, action, mods);
+	Window* obj = (Window*)glfwGetWindowUserPointer(window);
+	obj->input->mouseUpdate(button, action, mods);
 	// std::cout << "appuyer sur " << button << std::endl;
 }
 
@@ -35,13 +37,26 @@ void Window::fenetre_scroll_callback(GLFWwindow* window, double xoffset, double 
 
 void Window::fenetre_cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	// input.posMouseUpdate(xpos, ypos);
-	//std::cout << "Sourie : " << xpos << ":" << ypos << std::endl;
+	Window* obj = (Window*)glfwGetWindowUserPointer(window);
+	obj->input->posMouseUpdate(xpos, ypos);
+	// std::cout << "Sourie : " << xpos << ":" << ypos << std::endl;
 }
 
 void Window::fenetre_window_pos_callback(GLFWwindow* window, int xpos, int ypos)
 {
 	// std::cout << "Fenetre : " << xpos << ":" << ypos << std::endl;
+}
+
+void Window::window_iconify_callback(GLFWwindow * window, int iconified)
+{
+	if (iconified)
+	{
+		// The window was iconified
+	}
+	else
+	{
+		// The window was restored
+	}
 }
 
 void Window::drop_callback(GLFWwindow* window, int count, const char** paths)
@@ -53,10 +68,11 @@ void Window::drop_callback(GLFWwindow* window, int count, const char** paths)
 }
 void Window::fenetre_focus_callback(GLFWwindow* window, int focused)
 {
-	// if (focused)
-	// 	input.setFocus(true);
-	// else
-	// 	input.setFocus(false);
+	Window* obj = (Window*)glfwGetWindowUserPointer(window);
+	if (focused)
+		obj->input->setFocus(true);
+	else
+		obj->input->setFocus(false);
 
 	if (focused)
 		std::cout << "is Focus" << std::endl;
@@ -70,12 +86,15 @@ void Window::fenetre_refresh_callback(GLFWwindow* window)
 	//int _height, _width;
 	//glfwGetFramebufferSize(window, &_width, &_height);
 	//glViewport(0, 0, _width, _height);
-
+	// Swap the buffers
 	//glfwSwapBuffers(window);
 }
 
 void Window::fenetre_resize_callback(GLFWwindow* window, int width, int height)
 {
+	std::cout << "resize width " << width << ":" << height << std::endl;
+	Window* obj = (Window*)glfwGetWindowUserPointer(window);
+	obj->setDimansion(width, height);
 	glViewport(0, 0, width, height); // Definir l'affichage
 	// input.winUpadate(width, height);
 }
@@ -109,13 +128,24 @@ std::string UnicodeToUTF8(unsigned int codepoint)
 
 void Window::character_callback(GLFWwindow* window, unsigned int codepoint)
 {
+	Window* obj = (Window*)glfwGetWindowUserPointer(window);
 	std::cout << "Test: " << UnicodeToUTF8(codepoint) << std::endl;
 	// std::cout << "Clipboard test..." << std::endl;
 	// glfwSetClipboardString(window, "test"); // presspapier
 }
 
+void Window::setDimansion(int width, int height)
+{
+	_width = width;
+	_height = height;
+}
+
+
 GLFWwindow* Window::init_glfw(const char *title, int width, int height)
 {
+	_width = width;
+	_height = height;
+
 	// Init GLFW
 	if (!glfwInit())
 	{
@@ -130,19 +160,19 @@ GLFWwindow* Window::init_glfw(const char *title, int width, int height)
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // mettre a GL_FALSE pour enlever le resize
 
 	// Creation de la fenetre
-	GLFWwindow* window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+	_window = glfwCreateWindow(_width, _height, title, nullptr, nullptr);
 
 	// glfwSetWindowUserPointer(window, this);
 
-	if (window == nullptr) {
+	if (_window == nullptr) {
 		std::cerr << "Fail pour ouvrir la fenetre GLFW, votre systeme ne doit pas etre compatible OpenGL 3.3" << std::endl;
 		glfwTerminate();
 		return nullptr;
 	}
 
 	// Creer le contexte de la fenetre courant
-	glfwMakeContextCurrent(window);
-	glfwSetWindowUserPointer(window, this); // passer le pointer de la classe a la function
+	glfwMakeContextCurrent(_window);
+	glfwSetWindowUserPointer(_window, this); // passer le pointer de la classe a la function
 
 	// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
 	glewExperimental = GL_TRUE;
@@ -156,18 +186,19 @@ GLFWwindow* Window::init_glfw(const char *title, int width, int height)
 	glGetError();
 	// Set the required callback functions
 
-	glfwSetKeyCallback(window, fenetre_key_callback); // on appuye sur une touche
-	glfwSetMouseButtonCallback(window, fenetre_mouse_button_callback); // Sourie Touche
-	glfwSetScrollCallback(window, fenetre_scroll_callback); // scolling
-	glfwSetCursorPosCallback(window, fenetre_cursor_position_callback); // position souries
+	glfwSetKeyCallback(_window, fenetre_key_callback); // on appuye sur une touche
+	glfwSetMouseButtonCallback(_window, fenetre_mouse_button_callback); // Sourie Touche
+	glfwSetScrollCallback(_window, fenetre_scroll_callback); // scolling
+	glfwSetCursorPosCallback(_window, fenetre_cursor_position_callback); // position souries
 
-	glfwSetWindowFocusCallback(window, fenetre_focus_callback); // focus
-	glfwSetWindowRefreshCallback(window, fenetre_refresh_callback); // rafrechire
-	glfwSetWindowSizeCallback(window, fenetre_resize_callback); // redimentionement
-	glfwSetWindowPosCallback(window, fenetre_window_pos_callback); // deplacement de la fenetre
+	glfwSetWindowFocusCallback(_window, fenetre_focus_callback); // focus
+	glfwSetWindowRefreshCallback(_window, fenetre_refresh_callback); // rafrechire
+	glfwSetWindowSizeCallback(_window, fenetre_resize_callback); // redimentionement
+	glfwSetWindowPosCallback(_window, fenetre_window_pos_callback); // deplacement de la fenetre
 	// glfwSetFramebufferSizeCallback(_window, WindowResizeCallback);
-	glfwSetDropCallback(window, drop_callback); // drop file
-	glfwSetCharCallback(window, character_callback); // detection de touche
+	glfwSetDropCallback(_window, drop_callback); // drop file
+	glfwSetCharCallback(_window, character_callback); // detection de touche
+	glfwSetWindowIconifyCallback(_window, window_iconify_callback);
 	
 	glfwSwapInterval(0); // Disable vsync
 
@@ -184,6 +215,44 @@ GLFWwindow* Window::init_glfw(const char *title, int width, int height)
 	GLFWmonitor** monitors = glfwGetMonitors(&count);
 	std::cout << "vous avez " << count << " ecran" << std::endl;
 
-	_window = window;
-	return window;
+
+	GLFWimage icons[1];
+	icons[0].pixels = SOIL_load_image("icon.png", &icons[0].width, &icons[0].height, 0, SOIL_LOAD_RGBA);
+	std::cout << "ee" << icons[0].width << icons[0].height << std::endl;
+	if (!icons[0].pixels) {
+		std::cout << "Failed to load texture: " << sizeof(icons[0].pixels) << std::endl;
+	}
+	glfwSetWindowIcon(_window, 1, icons);
+
+	// GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	// int w, h;
+	// glfwGetMonitorPhysicalSize(monitor, &w, &h);
+	//glfwSetWindowSize(window, w, h);
+	//glfwSetWindowMonitor(window, monitor, 0, 0, w, h, 0);
+
+	// const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+	// glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, 0);
+
+	// glfwSetWindowSize(window, w, h);
+	// Move window to the upper left corner.
+	// glfwSetWindowPos(window, 0, 0);
+
+
+	glfwSetCursorPos(_window, _width / 2, _height / 2);
+	glDepthFunc(GL_LESS);
+
+	return _window;
+}
+
+bool Window::closeButton()
+{
+	return glfwWindowShouldClose(_window) ? true : false;
+}
+
+void Window::displayCursor(bool value)
+{
+	if (value)
+		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	else
+		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // GLFW_CURSOR_HIDDEN
 }
