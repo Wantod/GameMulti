@@ -44,11 +44,16 @@ public:
 	bool closeButton();
 	void displayCursor(bool value);
 
+	int getWidth() const;
+	int getHeight() const;
+	bool isResize();
+
 	Input *input;
 protected:
 	GLFWwindow* _window;
 	int fullscreen;
 
+	bool _resize;
 	int _width;
 	int _height;
 };

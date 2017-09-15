@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Texture.hpp"
+#include "Texture2D.hpp"
 
 
 Texture2D::Texture2D()

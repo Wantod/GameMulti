@@ -2,7 +2,7 @@
 #define TEXTURE2D_HPP
 
 #include <GL/glew.h>
-
+#include <SOIL.h>
 
 class Texture2D
 {

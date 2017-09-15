@@ -6,8 +6,8 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "../Core/Texture.hpp"
-#include "../Core/Shader.hpp"
+#include "Texture2D.hpp"
+#include "Shader.hpp"
 
 
 /// Holds all state information relevant to a character as loaded using FreeType
@@ -22,8 +22,6 @@ struct Character {
 class TextRenderer
 {
 public:
-	std::map<GLchar, Character> Characters;
-	Shader TextShader;
 	TextRenderer(GLuint width, GLuint height);
 	~TextRenderer();
 
@@ -31,8 +29,10 @@ public:
 	void update(GLuint width, GLuint height);
 	void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color = glm::vec3(1.0f));
 
+	Shader TextShader;
 private:
 	GLuint VAO, VBO;
+	std::map<GLchar, Character> Characters;
 };
 
 #endif // !TEXTRENDERER_HP

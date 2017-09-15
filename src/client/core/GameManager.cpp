@@ -22,8 +22,8 @@ void GameManager::run()
 {
 	Input input;
 	Window win(&input);
-	Game game(&input, &win);
 	GLFWwindow* window = win.init_glfw("Test", 800, 600);
+	Game game(&input, &win);
 
 	GLfloat fpsTime = glfwGetTime();
 	GLfloat lastTime = glfwGetTime();
@@ -35,12 +35,16 @@ void GameManager::run()
 
 	while (!game.end())
 	{
+		if (win.isResize()) {
+			game.resize(win.getWidth(), win.getHeight());
+		}
+
 		// Check and call events
 		glfwPollEvents();
 		
 		// clean
 		glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
-		// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		// fps
 		currentTime = glfwGetTime();
