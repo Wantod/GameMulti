@@ -1,18 +1,21 @@
 #include "Sprit2D.hpp"
 
 
-SpriteRenderer::SpriteRenderer(Shader &shader)
+Sprit2D::Sprit2D()
 {
-	this->shader = shader;
 	this->initRenderData();
 }
 
-SpriteRenderer::~SpriteRenderer()
+Sprit2D::~Sprit2D()
 {
 	glDeleteVertexArrays(1, &this->quadVAO);
 }
 
-void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color)
+void Sprit2D::setShader(Shader &shader) {
+	this->shader = shader;
+}
+
+void Sprit2D::DrawSprite(Texture &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color)
 {
 	// Prepare transformations
 	this->shader.use();
@@ -38,7 +41,7 @@ void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec
 	glBindVertexArray(0);
 }
 
-void SpriteRenderer::initRenderData()
+void Sprit2D::initRenderData()
 {
 	// Configure VAO/VBO
 	GLuint VBO;

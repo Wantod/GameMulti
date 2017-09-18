@@ -214,7 +214,7 @@ GLFWwindow* Window::init_glfw(const char *title, int width, int height)
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST); // test de profondeur
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+	
 	// info Window
 	GLint nrAttributes;
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);

@@ -2,6 +2,7 @@
 # include <glm/gtc/matrix_transform.hpp>
 # include <glm/gtc/type_ptr.hpp>
 #include "GameManager.hpp"
+#include "ResourceManager.hpp"
 #include "../Game.hpp"
 
 GameManager::GameManager()
@@ -33,10 +34,14 @@ void GameManager::run()
 	int frame = 0;
 	int fps = 0;
 
+	ResourceManager::get().init();
+	ResourceManager::get().resize(win.getWidth(), win.getHeight());
+
 	while (!game.end())
 	{
 		if (win.isResize()) {
 			game.resize(win.getWidth(), win.getHeight());
+			ResourceManager::get().resize(win.getWidth(), win.getHeight());
 		}
 
 		// Check and call events

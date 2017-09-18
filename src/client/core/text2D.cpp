@@ -103,6 +103,20 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 	FT_Done_FreeType(ft);
 }
 
+glm::vec2 TextRenderer::size(std::string text, GLfloat scale) {
+	glm::vec2 pos;
+
+	std::string::const_iterator c;
+	for (c = text.begin(); c != text.end(); c++)
+	{
+		Character ch = Characters[*c];
+		pos.x += (ch.Advance >> 6) * scale;
+	}
+	pos.y = 12 * scale;
+
+	return pos;
+}
+
 void TextRenderer::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)
 {
 	glEnable(GL_CULL_FACE);

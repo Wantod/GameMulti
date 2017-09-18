@@ -1,19 +1,24 @@
 ﻿#include "Game.hpp"
 #include <iostream>
 
-
-Game::Game(Input *i, Window *w) : GameInterface(i, w), text(200, 100)
+Game::Game(Input *i, Window *w) : GameInterface(i, w), btn(std::string("Salut"), 100, 100)
 {
-	shText.compile("./data/Shaders/text.vs", "./data/Shaders/text.frag");
-	text.TextShader = shText;
-	text.update(w->getWidth(), w->getHeight());
-	text.Load("./data/Fonts/Arial-Unicode-MS.ttf", 12);
+	// shText2.compile("./data/Shaders/texture.vs", "./data/Shaders/texture.frag");
+	// sprit = new SpriteRenderer(shText2);
+	// this->resize(w->getWidth(), w->getHeight());
+	texture = ResourceManager::get().getTexture("awesomeface.png", true);
 }
 
+Game::~Game()
+{
+}
 
 void Game::render()
 {
-	text.RenderText("Petit pierre", 10, 10, 1, glm::vec3(0, 0, 0));
+	ResourceManager::get().text.RenderText("Petit pierre", 10, 10, 1, glm::vec3(0.7, 0.1, 0.1));
+	ResourceManager::get().text.RenderText("Petit pierre", 10, 24, 1, glm::vec3(0.1, 0.1, 0.1));
+	ResourceManager::get().sprit.DrawSprite(texture, glm::vec2(window->getWidth() / 2 - 13, window->getHeight() / 2 - 13), glm::vec2(27, 27), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+	btn.render(*window);
 }
 
 void Game::update(float deltatime)
@@ -23,7 +28,6 @@ void Game::update(float deltatime)
 
 void Game::resize(int w, int h)
 {
-	text.update(w, h);
 }
 
 bool Game::end()

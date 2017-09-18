@@ -6,20 +6,26 @@
 
 #include "core\Shader.hpp"
 #include "core\Text2D.hpp"
+#include "core\Texture.hpp"
+#include "core\Sprit2D.hpp"
+#include "core\ResourceManager.hpp"
+
+#include "gui\Button.hpp"
 
 class Game : public GameInterface
 {
 public:
 	Game(Input *i, Window *w);
+	~Game();
 
 	void render();
 	void update(float deltatime);
 	void resize(int w, int h);
 	bool end();
 
-protected:
-	Shader shText;
-	TextRenderer text;
+private:
+	Texture texture;
+	Button btn;
 };
 
 #endif // !GAME_HPP

@@ -1,21 +1,21 @@
 #include <iostream>
-#include "Texture2D.hpp"
+#include "Texture.hpp"
 
 
-Texture2D::Texture2D()
+Texture::Texture()
 	: Width(0), Height(0), Internal_Format(GL_RGB), Image_Format(GL_RGB), Wrap_S(GL_REPEAT), Wrap_T(GL_REPEAT), Filter_Min(GL_LINEAR), Filter_Max(GL_LINEAR)
 {
 	glGenTextures(1, &this->ID);
 }
 
-Texture2D::~Texture2D()
+Texture::~Texture()
 {
 }
 
-Texture2D Texture2D::load(const GLchar *file, GLboolean alpha)
+Texture &Texture::load(const GLchar *file, GLboolean alpha)
 {
 	// Create Texture object
-	Texture2D texture;
+	Texture texture;
 	if (alpha)
 	{
 		texture.Internal_Format = GL_RGBA;
@@ -37,7 +37,7 @@ Texture2D Texture2D::load(const GLchar *file, GLboolean alpha)
 	return texture;
 }
 
-void Texture2D::Generate(GLuint width, GLuint height, unsigned char* data)
+void Texture::Generate(GLuint width, GLuint height, unsigned char* data)
 {
 	this->Width = width;
 	this->Height = height;
@@ -53,7 +53,7 @@ void Texture2D::Generate(GLuint width, GLuint height, unsigned char* data)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture2D::Bind() const
+void Texture::Bind() const
 {
 	glBindTexture(GL_TEXTURE_2D, this->ID);
 }

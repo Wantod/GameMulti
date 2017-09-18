@@ -18,7 +18,12 @@ public:
 	Shader();
 	~Shader();
 
-	GLuint	get() { return _id; }
+
+	void operator=(const Shader& s) {
+		_id = s.get();
+	}
+
+	GLuint get() const { return _id; }
 	Shader &use();
 	Shader &load(const std::string &filename, GLenum type);
 	Shader &link();

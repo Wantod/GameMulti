@@ -6,7 +6,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "Texture2D.hpp"
+#include "Texture.hpp"
 #include "Shader.hpp"
 
 
@@ -28,6 +28,7 @@ public:
 	void Load(std::string font, GLuint fontSize);
 	void update(GLuint width, GLuint height);
 	void RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color = glm::vec3(1.0f));
+	glm::vec2 size(std::string str, GLfloat scale = 1.0f);
 
 	Shader TextShader;
 private:

@@ -7,7 +7,7 @@ Shader::Shader()
 
 Shader::~Shader()
 {
-	glDeleteProgram(this->_id);
+	// glDeleteProgram(this->_id);
 }
 
 Shader &Shader::use()
