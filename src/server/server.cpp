@@ -144,7 +144,6 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		FD_ZERO(&rdfs);
-
 		FD_SET(sock, &rdfs);
 		selectRedy = select(sock + 1, &rdfs, nullptr, nullptr, &timeout);
 		if (selectRedy == -1)

@@ -1,0 +1,13 @@
+CLIENT  / SERVEUR
+
+-> connection
+<- ok
+<- player
+-> ok
+
+
+position player: int int int
+tire + position
+domage player
+block changement
+
