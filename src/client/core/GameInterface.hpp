@@ -8,7 +8,7 @@ class GameInterface
 {
 public:
 	GameInterface() : input(nullptr), window(nullptr) {}
-	GameInterface(Input *i, Window *w) : input(i), window(w) {}
+	GameInterface(InputManager *i, Window *w) : input(i), window(w) {}
 	~GameInterface() {}
 	
 	virtual void render() = 0;
@@ -17,7 +17,7 @@ public:
 	virtual bool end() = 0;
 
 protected:
-	Input *input;
+	InputManager *input;
 	Window *window;
 };
 

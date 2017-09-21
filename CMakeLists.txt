@@ -67,3 +67,6 @@ target_link_libraries(${CLIENT_NAME} ${LIBS})
 add_executable(${SERVER_NAME} ${SOURCE_INI} ${SOURCE_SER})
 
 
+
+# COPY DES RESOURCE DANS LE FICHIER FINAL
+file(COPY data/. DESTINATION ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE}/data/)

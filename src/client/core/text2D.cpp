@@ -4,18 +4,18 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include "TextRender.hpp"
-#include "../Core/ResourceManager.hpp"
+#include "Text2D.hpp"
 
 
 TextRenderer::TextRenderer(GLuint width, GLuint height)
 {
 	
 	// Load and configure shader
-	this->TextShader = ResourceManager::LoadShader("resources/Shaders/text.vs", "resources/Shaders/text.frag", nullptr, "text");
-	this->TextShader.use();
-	this->TextShader.set("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f), GL_TRUE);
-	this->TextShader.set("text", 0);
+	// this->TextShader = Shader();
+	// this->TextShader
+	// 	.use()
+	// 	.set("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f))
+	// 	.set("text", 0);
 	// Configure VAO/VBO for texture quads
 	glGenVertexArrays(1, &this->VAO);
 	glGenBuffers(1, &this->VBO);
@@ -35,7 +35,7 @@ TextRenderer::~TextRenderer()
 void TextRenderer::update(GLuint width, GLuint height)
 {
 	this->TextShader.use();
-	this->TextShader.set("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, 0.0f, 1.0f), GL_TRUE);
+	this->TextShader.set("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, 0.0f, 1.0f));
 	this->TextShader.set("text", 0);
 }
 
@@ -49,15 +49,17 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 		std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
 	// Load font as face
 	FT_Face face;
-	if (FT_New_Face(ft, font.c_str(), 0, &face))
-		std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+	if (FT_New_Face(ft, font.c_str(), 0, &face)) {
+		std::cout << "ERROR::FREETYPE: Failed to load font: " << font.c_str() << std::endl;
+		return;
+	}
 	// Set size to load glyphs as
 	FT_Set_Pixel_Sizes(face, 0, fontSize);
 	FT_Select_Charmap(face, ft_encoding_unicode);
 	// Disable byte-alignment restriction
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	// Then for the first 128 ASCII characters, pre-load/compile their characters and store them
-	for (GLubyte c = 0; c < 128; c++) // lol see what I did there 
+	for (FT_ULong c = 0; c < 128; c++) // lol see what I did there 
 	{
 		// Load character glyph 
 		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
@@ -99,6 +101,20 @@ void TextRenderer::Load(std::string font, GLuint fontSize)
 	// Destroy FreeType once we're finished
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft);
+}
+
+glm::vec2 TextRenderer::size(std::string text, GLfloat scale) {
+	glm::vec2 pos;
+
+	std::string::const_iterator c;
+	for (c = text.begin(); c != text.end(); c++)
+	{
+		Character ch = Characters[*c];
+		pos.x += (ch.Advance >> 6) * scale;
+	}
+	pos.y = 12 * scale;
+
+	return pos;
 }
 
 void TextRenderer::RenderText(std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)

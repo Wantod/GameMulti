@@ -31,10 +31,13 @@
 	#include <arpa/inet.h> // hton*, ntoh*, inet_addr
 	#include <unistd.h>  // close
 	#include <poll.h>
+	#include <netdb.h> // int adrress
 #endif
 
+#include <iostream>
 #include <string>
 #include "Errors.hpp"
+#include "Address.hpp"
 
 namespace Sockets
 {

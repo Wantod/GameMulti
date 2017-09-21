@@ -2,9 +2,9 @@
 #define TEXTURE2D_HPP
 
 #include <GL/glew.h>
+#include <SOIL.h>
 
-
-class Texture2D
+class Texture
 {
 public:
 	GLuint ID;
@@ -18,9 +18,9 @@ public:
 	GLuint Filter_Min; // Filtering mode if texture pixels < screen pixels
 	GLuint Filter_Max; // Filtering mode if texture pixels > screen pixels
 
-	Texture2D();
-	~Texture2D();
-	static Texture2D load(const GLchar *file, GLboolean alpha);
+	Texture();
+	~Texture();
+	static Texture &load(const GLchar *file, GLboolean alpha);
 	void Generate(GLuint width, GLuint height, unsigned char* data);
 	void Bind() const;
 

@@ -12,6 +12,21 @@ class Input
 public:
 	Input();
 	~Input();
+	
+	static Input& get();
+	static 	int8_t getKey(int key) const;
+	static 	int8_t getMouse(int key) const;
+	static 	bool isFocus() const;
+
+	static const glm::ivec2& getCursorPos() const;
+	static const glm::ivec2& getCursorRel() const;
+};
+
+class InputManager
+{
+public:
+	InputManager();
+	~InputManager();
 
 	void load(GLFWwindow* window, int height, int width);
 

@@ -2,7 +2,7 @@
 #include <string>
 #include <SOIL.h>
 
-Window::Window(Input *_input) : _width(800), _height(600), fullscreen(false), _window(nullptr), input(_input)
+Window::Window(InputManager *_input) : _width(800), _height(600), fullscreen(false), _window(nullptr), input(_input), _resize(false)
 {
 
 }
@@ -14,6 +14,14 @@ Window::~Window()
 		// glfwSetWindowShouldClose(window, GL_TRUE);
 		glfwTerminate();		
 	}
+}
+
+bool Window::isResize() {
+	if (_resize) {
+		_resize = false;
+		return true;
+	}
+	return false;
 }
 
 void Window::fenetre_key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -136,6 +144,7 @@ void Window::character_callback(GLFWwindow* window, unsigned int codepoint)
 
 void Window::setDimansion(int width, int height)
 {
+	_resize = true;
 	_width = width;
 	_height = height;
 }
@@ -205,7 +214,7 @@ GLFWwindow* Window::init_glfw(const char *title, int width, int height)
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST); // test de profondeur
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+	
 	// info Window
 	GLint nrAttributes;
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
@@ -237,9 +246,12 @@ GLFWwindow* Window::init_glfw(const char *title, int width, int height)
 	// Move window to the upper left corner.
 	// glfwSetWindowPos(window, 0, 0);
 
+	glfwGetFramebufferSize(_window, &_width, &_height);	// Detecter la modification du rize
+	glViewport(0, 0, _width, _height); // Definir l'affichage
 
 	glfwSetCursorPos(_window, _width / 2, _height / 2);
 	glDepthFunc(GL_LESS);
+
 
 	return _window;
 }
@@ -255,4 +267,14 @@ void Window::displayCursor(bool value)
 		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	else
 		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // GLFW_CURSOR_HIDDEN
+}
+
+int Window::getWidth() const
+{
+	return _width;
+}
+
+int Window::getHeight() const
+{
+	return _height;
 }

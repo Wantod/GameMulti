@@ -20,7 +20,7 @@
 class Window
 {
 public:
-	Window(Input *input);
+	Window(InputManager *input);
 	~Window();
 
 	GLFWwindow* init_glfw(const char *title, int width, int height);
@@ -44,11 +44,16 @@ public:
 	bool closeButton();
 	void displayCursor(bool value);
 
-	Input *input;
+	int getWidth() const;
+	int getHeight() const;
+	bool isResize();
+
+	InputManager *input;
 protected:
 	GLFWwindow* _window;
 	int fullscreen;
 
+	bool _resize;
 	int _width;
 	int _height;
 };

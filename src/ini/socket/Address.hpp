@@ -1,25 +1,28 @@
 #ifndef ADDRESS_HPP
 # define ADDRESS_HPP
 
-namespace Sockets
-{
+# include "Sockets.hpp"
+# include <cstdint>
+
+namespace Sockets {
+
 	class Address
 	{
 	public:
-		Address() = {};
-		~Address() {};
+		Address();
+		~Address();
 		
+		void set(SOCKADDR_IN addr);
+		bool set(const char *address, unsigned short port);
 
-		SOCKADDR_IN sin
+		uint32_t getIp();
+		uint16_t getPort();
 
+		SOCKADDR_IN sin;
 	};
 
-	bool operator==(Address const &d1, SOCKADDR_IN const &csin)
-	{
-		return d1.sin.sin_addr.s_addr == csin->sin_addr.s_addr
-			&& d1.sin.sin_port == csin->sin_port;
-	}
 }
 
+bool operator==(const Sockets::Address& a1, const Sockets::Address& a2);
 
-#endif // ADDRESS_HPP
+#endif // !ADDRESS_HPP

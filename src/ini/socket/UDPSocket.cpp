@@ -33,14 +33,14 @@ bool UDPSocket::init() {
 	return true;
 }
 
-bool UDPSocket::bind(int port) {
+bool UDPSocket::bind(unsigned short port) {
 	SOCKADDR_IN server;
 	server.sin_addr.s_addr = INADDR_ANY;  // indique que toutes les sources seront acceptées
 										  // UTILE: si le port est 0 il est assigné automatiquement
 	server.sin_port = htons(port); // toujours penser à traduire le port en réseau
 	server.sin_family = AF_INET; // notre socket est UDP
 
-	if (::bind(sock, (SOCKADDR *)&server, sizeof(server)) == SOCKET_ERROR)
+	if (::bind(sock, reinterpret_cast<SOCKADDR *>(&server), sizeof(server)) == SOCKET_ERROR)
 	{
 		std::cout << "Erreur bind : " << Sockets::GetError();
 		return false;
@@ -61,7 +61,7 @@ bool UDPSocket::wait() {
 	if (selectRedy == -1)
 	{
 		std::cout << "Erreur select : " << Sockets::GetError() << std::endl;
-		return -4;
+		return false;
 	}
 	else if (selectRedy > 0)
 	{
@@ -74,32 +74,28 @@ bool UDPSocket::wait() {
 	return false;
 }
 
-int UDPSocket::recv(int &sender, char *data, int size) {
-	if (!wait())
-		return -1;
-	SOCKADDR_IN address = { 0 };
+int UDPSocket::recv(void *data, std::size_t size, Sockets::Address &addr)
+{
+	//if (!wait())
+	//	return -1;
 
 	/* a client is talking */
-	int n = 0;
-	int sinsize = sizeof address;
+	int sinsize = sizeof (addr.sin);
 
-	if ((n = recvfrom(sock, data, size - 1, 0, (SOCKADDR *)&address, &sinsize)) < 0)
-	{
+	int n = recvfrom(sock, static_cast<char*>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr*>(&addr.sin), &sinsize);
+	if (n < 0)
 		return -1;
-	}
-	data[n] = 0;
-
-	uint32_t ip = ntohl(address.sin_addr.s_addr);
-	uint16_t port = ntohs(address.sin_port);
-
 	return n;
 }
 
-void UDPSocket::send(SOCKET sock, SOCKADDR_IN *sin, const char *buffer)
+bool UDPSocket::send(const void *data, std::size_t size, Sockets::Address &addr)
 {
-	if (sendto(sock, buffer, strlen(buffer), 0, (SOCKADDR *)sin, sizeof *sin) < 0)
+
+	if (sendto(sock, static_cast<const char*>(data), static_cast<int>(size), 0, reinterpret_cast<sockaddr*>(&addr.sin), sizeof (addr.sin)) < 0)
 	{
 		std::cout << "Erreur send()" << std::endl;
-		return;
+		return false;
 	}
+
+	return true;
 }

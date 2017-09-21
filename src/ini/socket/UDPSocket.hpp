@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 #include <cstdint>
-#define BUF_SIZE 1024
 
 class UDPSocket
 {
@@ -16,10 +15,11 @@ class UDPSocket
 		UDPSocket();
 		~UDPSocket();
 
-		void send(SOCKET sock, SOCKADDR_IN *sin, const char *buffer);
-		int recv(int &sender, char *data, int size);
+		int recv(void *data, std::size_t size, Sockets::Address &addr);
+		bool send(const void *data, std::size_t size, Sockets::Address &addr);
+
 		bool wait();
-		bool bind(int port = 8080);
+		bool bind(unsigned short port = 8080);
 		bool init();
 
 	private:
