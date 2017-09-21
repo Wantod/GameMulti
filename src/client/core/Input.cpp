@@ -1,18 +1,18 @@
-#include "InputManager.hpp"
+#include "Input.hpp"
 
-Input::Input();
-Input::~Input();
-	
-Input::Input& get() {
-	InputManager input;
+Input::Input() {}
+Input::~Input() {}
+
+InputManager& Input::get() {
+	static InputManager input;
 	return input;
 }
 
-int8_t Input::getKey(int key) const { return get().getKey(key); }
-int8_t Input::getMouse(int key) const { return get().getMouse(key); }
-bool Input::isFocus() const { return get().isFocus(); }
-const glm::ivec2& Input::getCursorPos() const { return get().getCursorPos(); }
-const glm::ivec2& Input::getCursorRel() const { return get().getCursorRel(); }
+int8_t Input::getKey(int key)  { return get().getKey(key); }
+int8_t Input::getMouse(int key)  { return get().getMouse(key); }
+bool Input::isFocus()  { return get().isFocus(); }
+const glm::ivec2& Input::getCursorPos()  { return get().getCursorPos(); }
+const glm::ivec2& Input::getCursorRel()  { return get().getCursorRel(); }
 
 InputManager::InputManager() : _cursor(0),_cursorRel(0), _terminer(false), _window(nullptr), _focus(true), _width(0), _height(0), _resize(false), _firstPos(true), _razRel(false)
 {
@@ -28,10 +28,6 @@ InputManager::~InputManager()
 {
 }
 
-InputManager &InputManager::get() {
-	static InputManager InputManager;
-	return InputManager;
-}
 
 void InputManager::load(GLFWwindow* window, int height, int width)
 {
@@ -93,9 +89,9 @@ void InputManager::displayCursor(bool value)
 		return;
 
 	if (value)
-		glfwSetInputManagerMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	else
-		glfwSetInputManagerMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // GLFW_CURSOR_HIDDEN
+		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // GLFW_CURSOR_HIDDEN
 	_razRel = true;
 	this->cleanRel();
 }

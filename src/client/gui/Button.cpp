@@ -25,5 +25,4 @@ void Button::render(Window &window) {
 	glDisable(GL_DEPTH_TEST);
 	ResourceManager::get().sprit.DrawSprite(_texture, glm::vec2(posF.x - 100, posF.y), glm::vec2(200, 40), 0.0f, glm::vec3(0.0f, 1.0f, 1.0f));
 	ResourceManager::get().text.RenderText(_text, posF.x - (pos.x / 2), 50, 1);
-
 }

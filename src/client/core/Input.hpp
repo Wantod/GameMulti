@@ -7,21 +7,6 @@
 # include <glfw3.h>
 # include <cstdint>
 
-class Input
-{
-public:
-	Input();
-	~Input();
-	
-	static Input& get();
-	static 	int8_t getKey(int key) const;
-	static 	int8_t getMouse(int key) const;
-	static 	bool isFocus() const;
-
-	static const glm::ivec2& getCursorPos() const;
-	static const glm::ivec2& getCursorRel() const;
-};
-
 class InputManager
 {
 public:
@@ -32,7 +17,7 @@ public:
 
 	void keyUpdate(int key, int scancode, int action, int mode);
 	void mouseUpdate(int button, int action, int mods);
-	void joyUpdate();
+	//void joyUpdate();
 	void winUpadate(int width, int height);
 	void posMouseUpdate(double xpos, double ypos);
 
@@ -76,6 +61,22 @@ private:
 	bool _terminer;
 	bool _focus;
 	bool _resize;
+};
+
+class Input
+{
+public:
+	Input();
+	~Input();
+
+	static InputManager& get();
+
+	static 	int8_t getKey(int key);
+	static 	int8_t getMouse(int key);
+	static 	bool isFocus();
+
+	static const glm::ivec2& getCursorPos();
+	static const glm::ivec2& getCursorRel();
 };
 
 #endif // !INPUT_HPP_
