@@ -20,7 +20,7 @@ void ResourceManager::init() {
 
 	// text
 	text.TextShader = textShader;
-	text.Load("./data/Fonts/Arial-Unicode-MS.ttf", 12);
+	text.Load("./data/Fonts/Arial-Unicode-MS.ttf", 18);
 
 	// sprit 2D
 	sprit.setShader(textureShader);

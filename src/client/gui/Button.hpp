@@ -8,19 +8,22 @@
 class Button
 {
 public:
-	Button(std::string &str, int x, int y);
+	Button(std::string &str, glm::ivec2 position, glm::ivec2 boxsize);
 	~Button();
 	
 	void setText(std::string &str);
-	bool onClick(int x, int y);
-	void render(Window &win);
+	bool onClick();
+	void render();
+	void resize(int x, int y);
+	void setPosition(glm::ivec2 position, bool center = false);
 
+private:
 	std::string _text;
-	int _x;
-	int _y;
-	int _width;
-	int _height;
 	Texture _texture;
+
+	glm::ivec2 _position;
+	glm::ivec2 _box;
+	glm::ivec2 _textpositionTMP;	
 };
 
 

@@ -12,7 +12,23 @@ Texture::~Texture()
 {
 }
 
-Texture &Texture::load(const GLchar *file, GLboolean alpha)
+void Texture::setPixel(bool pixelizer) {
+	if (pixelizer) {
+		Filter_Min = GL_NEAREST;
+		Filter_Max = GL_NEAREST;
+		std::cout << "pixeliser !" << std::endl;
+	}
+	else {
+		Filter_Min = GL_LINEAR;
+		Filter_Max = GL_LINEAR;
+	}
+	glBindTexture(GL_TEXTURE_2D, this->ID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->Filter_Min);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->Filter_Max);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+Texture &Texture::load(const GLchar *file, GLboolean alpha, bool pixelizer)
 {
 	// Create Texture object
 	Texture texture;
@@ -30,6 +46,7 @@ Texture &Texture::load(const GLchar *file, GLboolean alpha)
 	}
 	else
 		std::cout << sizeof(image) << "tail " << width << ":" << height << "!" << std::endl;
+	texture.setPixel(pixelizer);
 	// Now generate texture
 	texture.Generate(width, height, image);
 	// And finally free image data

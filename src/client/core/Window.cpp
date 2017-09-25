@@ -29,6 +29,10 @@ void Window::fenetre_key_callback(GLFWwindow* window, int key, int scancode, int
 	std::cout << "appuyer sur " << key << std::endl;
 	Window* obj = (Window*)glfwGetWindowUserPointer(window);
 	obj->input->keyUpdate(key, scancode, action, mode);
+
+	const char* key_name = glfwGetKeyName(key, scancode);
+	if (key_name)
+		std::cout << "Touche: " << key_name << std::endl;
 }
 
 void Window::fenetre_mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -138,6 +142,7 @@ void Window::character_callback(GLFWwindow* window, unsigned int codepoint)
 {
 	Window* obj = (Window*)glfwGetWindowUserPointer(window);
 	std::cout << "Test: " << UnicodeToUTF8(codepoint) << std::endl;
+	obj->input->getTextInput();
 	// std::cout << "Clipboard test..." << std::endl;
 	// glfwSetClipboardString(window, "test"); // presspapier
 }

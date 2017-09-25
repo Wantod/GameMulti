@@ -20,7 +20,10 @@ public:
 
 	Texture();
 	~Texture();
-	static Texture &load(const GLchar *file, GLboolean alpha);
+
+	void setPixel(bool pixelizer = true);
+
+	static Texture &load(const GLchar *file, GLboolean alpha, bool pixelizer = false);
 	void Generate(GLuint width, GLuint height, unsigned char* data);
 	void Bind() const;
 

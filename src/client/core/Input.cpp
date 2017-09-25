@@ -13,8 +13,10 @@ int8_t Input::getMouse(int key)  { return get().getMouse(key); }
 bool Input::isFocus()  { return get().isFocus(); }
 const glm::ivec2& Input::getCursorPos()  { return get().getCursorPos(); }
 const glm::ivec2& Input::getCursorRel()  { return get().getCursorRel(); }
+std::string Input::getTextInput()  { return get().getTextInput(); }
+void Input::activText(bool activ)  { get().activText(activ); }
 
-InputManager::InputManager() : _cursor(0),_cursorRel(0), _terminer(false), _window(nullptr), _focus(true), _width(0), _height(0), _resize(false), _firstPos(true), _razRel(false)
+InputManager::InputManager() : _cursor(0),_cursorRel(0), _terminer(false), _window(nullptr), _focus(true), _width(0), _height(0), _resize(false), _firstPos(true), _razRel(false), inputTextAccept(false), _textInput("")
 {
 	for (size_t i = 0; i <= GLFW_KEY_LAST; i++)
 		_key[i] = 0;
@@ -28,6 +30,21 @@ InputManager::~InputManager()
 {
 }
 
+
+void InputManager::setTextInput(std::string text) {
+	if (inputTextAccept)
+		_textInput += text;
+}
+
+void InputManager::activText(bool active) {
+	inputTextAccept = active;
+}
+
+std::string InputManager::getTextInput() {
+	std::string ret = _textInput;
+	_textInput = "";
+	return ret;
+}
 
 void InputManager::load(GLFWwindow* window, int height, int width)
 {

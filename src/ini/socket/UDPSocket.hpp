@@ -22,8 +22,10 @@ class UDPSocket
 		bool bind(unsigned short port = 8080);
 		bool init();
 
+		Sockets::Address getSocket();
 	private:
 		SOCKET sock;
+		SOCKADDR_IN server;
 };
 
 #endif // UDPSOCKET_HPP

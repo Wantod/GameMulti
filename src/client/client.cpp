@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "../ini/socket/UDPSocket.hpp"
-#include "core\GameManager.hpp"
+#include "GameManager.hpp"
 
 int main(int argc, char **argv)
 {
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
 	if(argc < 2)
 	{
-		printf("Usage : %s [address] [pseudo]\n", argv[0]);
+		printf("2Usage : %s [address] [pseudo]\n", argv[0]);
 		return EXIT_FAILURE;
 	}
 

@@ -6,7 +6,7 @@
 # include <glm/gtc/type_ptr.hpp>
 # include <glfw3.h>
 # include <cstdint>
-
+# include <iostream>
 class InputManager
 {
 public:
@@ -41,6 +41,12 @@ public:
 	// SET
 	void setWindow(GLFWwindow* window);
 	void setFocus(bool focus);
+
+
+	void setTextInput(std::string text);
+	std::string getTextInput();
+	void activText(bool active);
+
 private:
 	GLFWwindow* _window;
 	int8_t _key[GLFW_KEY_LAST + 1];
@@ -56,6 +62,9 @@ private:
 	glm::ivec2 _cursorRel;
 	bool _razRel;
 	bool _firstPos;
+
+	std::string _textInput;
+	bool inputTextAccept;
 
 	// autre
 	bool _terminer;
@@ -77,6 +86,9 @@ public:
 
 	static const glm::ivec2& getCursorPos();
 	static const glm::ivec2& getCursorRel();
+
+	static std::string getTextInput();
+	static void activText(bool activ);
 };
 
 #endif // !INPUT_HPP_
