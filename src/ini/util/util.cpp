@@ -29,4 +29,57 @@ namespace  util {
 		return out;
 	}
 
+	/*
+	glm::vec4 Player::TraceRay(glm::vec3 posit, glm::vec3 dir, int max, bool last)
+	{
+		glm::vec3 vox = glm::floor(posit);
+		glm::vec3 next(max, max, max);
+		glm::vec3 delta(max, max, max);
+		glm::vec3 step(0, 0, 0);
+		glm::vec3 lastVox(-1);
+		lastBlock = glm::vec4(-1);
+
+		if (world->getCube(vox[0], vox[1], vox[2]) > 0) {
+			if (last)
+				return glm::vec4(-1);
+			return glm::vec4(vox[0], vox[1], vox[2], 0);
+		}
+
+		for (int i = 0; i < 3; ++i) {
+			if (dir[i] < 0) {
+				step[i] = -1;
+				delta[i] = step[i] / dir[i];
+				next[i] = (vox[i] - posit[i]) / dir[i];
+			} else if (dir[i] != 0) {
+				step[i] = 1;
+				delta[i] = step[i] / dir[i];
+				next[i] = ((vox[i] + 1) - posit[i]) / dir[i];
+			}
+		}
+
+		int nb = 0;
+		while (nb < max) {
+			lastVox = vox;
+			// Perform DDA
+			int side = 0;
+			for (int i = 1; i < 3; ++i) {
+				if (next[side] > next[i]) {
+					side = i;
+				}
+			}
+			next[side] += delta[side];
+			vox[side] += step[side];
+
+			// Sample volume data at calculated position and make collision calculations
+			if (world->getCube(vox[0], vox[1], vox[2]) > 0) {
+				lastBlock = glm::vec4(lastVox, side);
+				if (last)
+					return glm::vec4(lastVox, side);
+				return glm::vec4(vox[0], vox[1], vox[2], side);
+			}
+			nb++;
+		}
+		return glm::vec4(-1); // No voxel found
+	} */
+
 }
