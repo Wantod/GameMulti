@@ -13,6 +13,10 @@
 
 #include "../gui\Button.hpp"
 
+
+#include "../core/Mesh.hpp"
+#include "../Camera.hpp"
+
 class Game : public GameInterface
 {
 public:
@@ -30,7 +34,12 @@ private:
 	Button btnMain;
 	Button btnOption;
 
+	std::unique_ptr<Mesh> _cube;
+	std::unique_ptr<Camera> _camera;
+
 	bool menu_focus;
+	Shader &shader;
+	std::vector<Vertex> vertice;
 };
 
 #endif // !GAME_HPP

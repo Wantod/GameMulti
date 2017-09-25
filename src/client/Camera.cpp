@@ -1,7 +1,7 @@
 #include "Camera.hpp"
 
 Camera::Camera()
-	: _front(glm::vec3(0.0f)), alpha(0.0f), delta(10.0f), speed(0.1f), _up(glm::vec3(0.0f, 1.0f, 0.0f))
+	: _front(glm::vec3(0.0f)), alpha(0.0f), delta(10.0f), speed(1.f), _up(glm::vec3(0.0f, 1.0f, 0.0f)) // speed 0.1f
 {
 	this->updateFront();
 }

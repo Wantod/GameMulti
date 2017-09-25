@@ -5,6 +5,7 @@
 # include <string>
 
 namespace  util {
+
 	std::string UnicodeToUTF8(unsigned int codepoint);
 }
 
