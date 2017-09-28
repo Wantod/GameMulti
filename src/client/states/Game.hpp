@@ -16,6 +16,7 @@
 
 #include "../core/Mesh.hpp"
 #include "../Camera.hpp"
+#include "../entity/Player.hpp"
 
 class Game : public GameInterface
 {
@@ -36,6 +37,8 @@ private:
 
 	std::unique_ptr<Mesh> _cube;
 	std::unique_ptr<Camera> _camera;
+
+	Player _player;
 
 	bool menu_focus;
 	Shader &shader;

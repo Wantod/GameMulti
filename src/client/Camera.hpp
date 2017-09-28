@@ -18,7 +18,7 @@ public:
 	float getAlpha();
 	
 	glm::mat4 lookAt(glm::vec3 position = glm::vec3(0.0f, 30.0f, 30.0f));
-	glm::vec3 get_front();
+	glm::vec3 get_front() const;
 
 private:
 	glm::vec3 _front;

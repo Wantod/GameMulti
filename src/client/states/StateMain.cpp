@@ -36,5 +36,5 @@ void StateMain::resize(int w, int h)
 
 bool StateMain::end()
 {
-	return (Input::getKey(GLFW_KEY_ESCAPE) == 2 || _gm->window->closeButton() || (btnQuiter.onClick() && Input::getMouse(GLFW_MOUSE_BUTTON_1) == 1)) ? true : false;
+	return (Input::getKey(GLFW_KEY_ESCAPE) == 2 || _gm->window->closeButton() || (btnQuiter.onClick() && Input::getMouse(GLFW_MOUSE_BUTTON_1) == 2)) ? true : false;
 }
