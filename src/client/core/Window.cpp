@@ -257,6 +257,8 @@ GLFWwindow* Window::init_glfw(const char *title, int width, int height)
 	glfwSetCursorPos(_window, _width / 2, _height / 2);
 	glDepthFunc(GL_LESS);
 
+	// glEnable(GL_CULL_FACE);
+
 
 	return _window;
 }

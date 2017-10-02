@@ -3,9 +3,9 @@
 
 # include <iostream>
 # include <vector>
-# include <GL/glew.h>
 
 #include "./Shader.hpp"
+#include "./ResourceManager.hpp"
 
 struct Vertex {
 	glm::vec3 Position;
@@ -17,6 +17,7 @@ class Mesh
 public:
 	Mesh(Shader &shader, std::vector<Vertex> &vertice);
 	Mesh(Shader &shader);
+	Mesh();
 	~Mesh();
 
 	void load();

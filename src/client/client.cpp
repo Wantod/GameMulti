@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <string.h>
 
+#include <GL/glew.h>
 #include "../ini/socket/UDPSocket.hpp"
 #include "GameManager.hpp"
 

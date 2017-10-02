@@ -71,7 +71,7 @@ Packet& Packet::operator >>(std::string& data) {
 
 	data.clear();
 	// Then extract characters
-	data.assign(&m_data[m_readPos], length);
+	//data.assign(&m_data[m_readPos], length);
 
 	// Update reading position
 	m_readPos += length;

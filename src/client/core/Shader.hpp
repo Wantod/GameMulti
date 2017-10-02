@@ -20,10 +20,10 @@ public:
 
 
 	void operator=(const Shader& s) {
-		_id = s.get();
+		_id = s.getId();
 	}
 
-	GLuint get() const { return _id; }
+	GLuint getId() const { return _id; }
 	Shader &use();
 	Shader &load(const std::string &filename, GLenum type);
 	Shader &link();

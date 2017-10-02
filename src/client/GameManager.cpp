@@ -46,8 +46,6 @@ void GameManager::run()
 			ResourceManager::get().resize(window->getWidth(), window->getHeight());
 		}
 
-		// Check and call events
-		glfwPollEvents();
 		
 		// clean
 		glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
@@ -93,5 +91,8 @@ void GameManager::run()
 
 		input.cleanRel();
 		input.cleanKey();
+
+		// Check and call events
+		glfwPollEvents();
 	}
 }

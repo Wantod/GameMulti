@@ -1,0 +1,8 @@
+#ifndef CHUNKMANAGER_HPP
+# define CHUNKMANAGER_HPP
+
+
+
+
+
+#endif // !CHUNKMANAGER_HPP

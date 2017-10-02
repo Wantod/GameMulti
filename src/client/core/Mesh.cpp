@@ -10,6 +10,10 @@ Mesh::Mesh(Shader &shader)
 {
 }
 
+Mesh::Mesh() : shader(ResourceManager::get().getShader("voxel"))
+{
+}
+
 Mesh::~Mesh()
 {
 	// Destruction du VBO

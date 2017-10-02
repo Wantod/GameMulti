@@ -33,7 +33,7 @@ public:
 	Packet& operator <<(uint64_t data);
 	Packet& operator <<(const std::string&	data);
 private:
-	std::vector<char> m_data;
+	std::vector<unsigned char> m_data;
 	std::size_t m_readPos;
 	std::size_t m_sendPos;
 };

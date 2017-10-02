@@ -1,7 +1,9 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <GL/glew.h>
+# include <GL/glew.h>
+# include <GLFW/glfw3.h>
+
 #include "../states/GameInterface.hpp"
 #include "../GameManager.hpp"
 
@@ -17,6 +19,7 @@
 #include "../core/Mesh.hpp"
 #include "../Camera.hpp"
 #include "../entity/Player.hpp"
+#include "../world/World.hpp"
 
 class Game : public GameInterface
 {
@@ -39,10 +42,14 @@ private:
 	std::unique_ptr<Camera> _camera;
 
 	Player _player;
+	World _world;
 
 	bool menu_focus;
 	Shader &shader;
 	std::vector<Vertex> vertice;
+
+	// debug
+	bool debug = false;
 };
 
 #endif // !GAME_HPP

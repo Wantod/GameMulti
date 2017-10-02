@@ -35,10 +35,17 @@ void Game::render(int fps)
 {
 	// 3D
 	glEnable(GL_DEPTH_TEST); // activer la profondeur
-	shader.use().set("view", _camera->lookAt(_player.getPos()));
+	if (debug)
+		glDisable(GL_CULL_FACE);
+	else
+		glEnable(GL_CULL_FACE);
+
+	shader.use().set("view", _camera->lookAt(_player.getPos() + glm::vec3(0,1,0)));
 	glm::mat4 model(1);
 	model = glm::translate(model, glm::vec3(3));
 	_cube->draw(model);
+	_world.render();
+	_player.render(_camera.get());
 
 	// interface
 	std::string fpsString = std::to_string(fps) + " FPS";
@@ -62,6 +69,15 @@ void Game::update(float deltatime)
 		menu_focus = true;
 	}
 
+	if (Input::getKey(GLFW_KEY_F3) == 1) {
+		if (!debug)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		else
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		debug = !debug;
+	}
+
+	// menu
 	if (!menu_focus) {
 		_camera->update(Input::getCursorRel());
 		return;
@@ -72,6 +88,7 @@ void Game::update(float deltatime)
 	}
 	if (btnMain.onClick() && Input::getMouse(GLFW_MOUSE_BUTTON_1) == 1)
 		_gm->setState<StateMain>(*_gm);
+
 }
 
 void Game::resize(int w, int h)

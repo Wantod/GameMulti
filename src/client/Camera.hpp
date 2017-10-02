@@ -20,6 +20,9 @@ public:
 	glm::mat4 lookAt(glm::vec3 position = glm::vec3(0.0f, 30.0f, 30.0f));
 	glm::vec3 get_front() const;
 
+	float getAlpha() const { return alpha; }
+	float getDelta() const { return delta; }
+
 private:
 	glm::vec3 _front;
 	glm::vec3 _up;

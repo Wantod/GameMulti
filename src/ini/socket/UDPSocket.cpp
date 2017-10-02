@@ -42,10 +42,12 @@ Sockets::Address UDPSocket::getSocket() {
 bool UDPSocket::bind(unsigned short port) {
 	server.sin_addr.s_addr = INADDR_ANY;  // indique que toutes les sources seront acceptées
 										  // UTILE: si le port est 0 il est assigné automatiquement
-	server.sin_port = 0;// htons(port); // toujours penser à traduire le port en réseau
+	server.sin_port = htons(port); // toujours penser à traduire le port en réseau
 	server.sin_family = AF_INET; // notre socket est UDP
 	socklen_t size = sizeof(server);
+
 	getsockname(sock, (struct sockaddr *) &server, &size);
+	
 	if (::bind(sock, reinterpret_cast<SOCKADDR *>(&server), sizeof(server)) == SOCKET_ERROR)
 	{
 		std::cout << "Erreur bind : " << Sockets::GetError();
