@@ -16,7 +16,7 @@ public:
 
 	glm::vec3 getPos() const;
 
-	virtual void update(float deltatime) = 0;
+	void update(float deltatime);
 	// virtual void render() = 0;
 
 protected:

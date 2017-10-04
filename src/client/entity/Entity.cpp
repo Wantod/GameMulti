@@ -13,3 +13,9 @@ Entity::~Entity() {
 glm::vec3 Entity::getPos() const {
 	return pos;
 }
+
+void Entity::update(float deltatime)
+{
+	vel = vel + acc * deltatime;
+	pos = pos + vel * deltatime;
+}

@@ -104,7 +104,13 @@ Player::~Player() {
 }
 
 void Player::update(float deltatime) {
-
+	acc = glm::vec3(0, -20, 0);
+	Entity::update(deltatime);
+	ResourceManager::get().text.RenderText("TEST " + std::to_string(glm::length(vel)), 10, 100, 1);
+	if (pos.y < 0) {
+		pos.y = 0;
+		vel.y = 0;
+	}
 }
 
 void Player::render(const Camera *camera) {
@@ -150,7 +156,7 @@ void Player::render(const Camera *camera) {
 	model = glm::rotate(model, glm::radians(camera->getDelta()), glm::vec3(1, 0, 0));
 	model = glm::translate(model, -glm::vec3(0, 0, 0));
 
-	tete.draw(model);	
+	tete.draw(model);
 }
 
 void Player::updateInput(float deltatime, const Camera *camera) {
@@ -164,10 +170,6 @@ void Player::updateInput(float deltatime, const Camera *camera) {
 	{
 	}
 
-	if (Input::getKey(GLFW_KEY_ESCAPE)) {
-		// vel.
-	}
-
 	if (Input::getKey(GLFW_KEY_W) == 1) {
 		if (_speedTimeTmp + 0.6 > glfwGetTime())
 			_speed = true;
@@ -178,7 +180,7 @@ void Player::updateInput(float deltatime, const Camera *camera) {
 
 	if (Input::getKey(GLFW_KEY_W)) {
 		dirD += dir;
-		if (_speed) speed *= 2;
+		if (_speed) speed *= 3;
 	} else {
 		_speed = false;
 	}
@@ -192,15 +194,22 @@ void Player::updateInput(float deltatime, const Camera *camera) {
 		dirD.x += dir.z;
 		dirD.z -= dir.x;
 	}
+	if (Input::getKey(GLFW_KEY_SPACE) == 1) {
+		vel.y += 8;
+	}
 	// std::cout << pos.x << ":" << pos.y << std::endl;
 	if (dirD.x != 0 && dirD.z != 0) {
 		_speedDeplacement += deltatime;
 		if (_speedDeplacement > 1) _speedDeplacement = 1;
 		dirD = glm::normalize(dirD);
-		pos += dirD * (deltatime * speed);
+		vel += dirD * speed;
 	}
 	else {
 		_speedDeplacement -= deltatime;
 		if (_speedDeplacement < 0) _speedDeplacement = 0;
 	}
+	this->update(deltatime);
+
+	vel.x = 0;
+	vel.z = 0;
 }
