@@ -54,14 +54,14 @@ glm::mat4 Camera::lookAt(glm::vec3 position)
 		// truc.x = 1;
 		//truc.y = 1;
 		//truc.z = -1;
-		*/
+	// camera TPS	
 	position.y += 0;
 	position.z += sin(glm::radians(alpha + 90)) * 0.5;
 	position.x += cos(glm::radians(alpha + 90)) * 0.5;
 	glm::vec3 position2 = position;
 	position2 -= (this->_front + this->_front + this->_front + this->_front);
 	 	return glm::lookAt(position2, position + this->_front, this->_up); // position de eye // point pointer // axe verical, mis en Y (x, y, z)
-		
+	*/	
 	return glm::lookAt(position, position + this->_front, this->_up); // position de eye // point pointer // axe verical, mis en Y (x, y, z)
 }
 
