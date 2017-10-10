@@ -17,12 +17,12 @@ public:
 	void render();
 	void update();
 
+
 	static int const WORLD_SIZE = 12; // 32
 	static int const CHUNK_SIZE = 16;
 
 private:
 	Chunk chunk;
-
 	std::unordered_map<int, Chunk *> _map;
 };
 
