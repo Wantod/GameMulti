@@ -196,6 +196,8 @@ void Player::updateInput(float deltatime, const Camera *camera) {
 	}
 	if (Input::getKey(GLFW_KEY_SPACE) == 1) {
 		vel.y += 8;
+		vel.x += dirD.x * speed / 2;
+		vel.z += dirD.z * speed / 2;
 	}
 	
 	// std::cout << pos.x << ":" << pos.y << std::endl;
@@ -203,7 +205,7 @@ void Player::updateInput(float deltatime, const Camera *camera) {
 		_speedDeplacement += deltatime;
 		if (_speedDeplacement > 1) _speedDeplacement = 1;
 		dirD = glm::normalize(dirD);
-		vel += dirD * speed;
+		pos += dirD * speed * deltatime;
 	}
 	else {
 		_speedDeplacement -= deltatime;
@@ -221,5 +223,8 @@ void Player::updateInput(float deltatime, const Camera *camera) {
 	if (pos.y == 0) {
 		vel.x = 0;
 		vel.z = 0;
+	} else {
+		vel.x -= vel.x * 0.10 * deltatime;
+		vel.z -= vel.z * 0.10 * deltatime;
 	}
 }

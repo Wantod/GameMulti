@@ -6,7 +6,7 @@
 # include <complex>
 # include <unordered_map>
 
-# include "Chunk.hpp"
+# include "Column.hpp"
 
 class World
 {
@@ -22,8 +22,7 @@ public:
 	static int const CHUNK_SIZE = 16;
 
 private:
-	Chunk chunk;
-	std::unordered_map<int, Chunk *> _map;
+	std::unordered_map<int, Column *> _map;
 };
 
 #endif // !WORLD_HPP_

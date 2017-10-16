@@ -5,16 +5,33 @@
 Column::Column(World & world, glm::ivec2 & position)
 	: _world(&world), _position(position)
 {
+	for (int y = 0; y < 2; ++y)
+	{
+		_chunks.emplace_back(glm::ivec3(_position.x, y, _position.y));
+	}
 }
 
 Column::~Column()
 {
 }
 
-void Column::load(GeneratorChunk & generator)
+void Column::load() // GeneratorChunk &generator
 {
-	// generator.
+	for (auto& chunk : _chunks) {
+		chunk.load();
+	}
 	_load = true;
+}
+
+void Column::update()
+{
+}
+
+void Column::render()
+{
+	for (auto& chunk : _chunks) {
+		chunk.render();
+	}
 }
 
 void Column::setBlock(int x, int y, int z, unsigned int b)
@@ -28,12 +45,14 @@ unsigned int Column::getBlock(int x, int y, int z) const
 {
 	return _chunks[y >> 4].getBlock(x, y & 0xF, z);
 }
-/*
-Chunk & Column::getChunk(int y)
+
+
+Chunk *Column::getChunk(int y)
 {
-//	return (y < 0 || y >= _chunks.size()) ? nullptr : _chunks[y];
-	return Chunk();
-}*/
+	if (y < 0 || y >= _chunks.size())
+		return nullptr;
+	return &_chunks[y];
+}
 
 bool Column::hasLoad() const
 {

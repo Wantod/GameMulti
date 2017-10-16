@@ -1,6 +1,6 @@
 #include "World.hpp"
 
-World::World() : chunk(glm::vec3(1, 0, 1))
+World::World()
 {
 	
 	int i = 0;
@@ -8,9 +8,9 @@ World::World() : chunk(glm::vec3(1, 0, 1))
 	for (int z = -2; z < 2; z++)
 	{
 		i++;
-		Chunk *ch = new Chunk(glm::vec3(x, 0, z));
-		ch->load();
-		_map.emplace(i, ch);
+		Column *col = new Column(*this, glm::ivec2(x, z));
+		col->load();
+		_map.emplace(i, col);
 	}
 }
 

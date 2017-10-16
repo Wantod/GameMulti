@@ -41,7 +41,7 @@ void Camera::update(glm::ivec2 dep)
 
 glm::mat4 Camera::lookAt(glm::vec3 position)
 {
-	/*
+	
 	glm::vec3 truc;
 	 	truc.x = cos(glm::radians(alpha + 120));
 	 	truc.y = 1.5;
@@ -61,7 +61,7 @@ glm::mat4 Camera::lookAt(glm::vec3 position)
 	glm::vec3 position2 = position;
 	position2 -= (this->_front + this->_front + this->_front + this->_front);
 	 	return glm::lookAt(position2, position + this->_front, this->_up); // position de eye // point pointer // axe verical, mis en Y (x, y, z)
-	*/	
+	
 	return glm::lookAt(position, position + this->_front, this->_up); // position de eye // point pointer // axe verical, mis en Y (x, y, z)
 }
 
