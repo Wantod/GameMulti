@@ -22,7 +22,6 @@ void Chunk::load()
 {
 	std::vector<Vertex> vert;
 	glm::vec3 color(0, 0.796, 0);
-	std::cout << "Couleur " << color.x << ":" << color.y << ":" << color.z << std::endl;
 
 	glm::vec3 color2 = color;
 	glm::vec3 color3 = color;
@@ -68,7 +67,6 @@ void Chunk::load()
 				vert.push_back(Vertex{ point[7], color });
 			}
 			if (getBlock(x, y - 1, z) == 0) {
-				std::cout << getBlock(x, y + 1, z) << std::endl;
 				// dessou
 				vert.push_back(Vertex{ point[0], color3 });
 				vert.push_back(Vertex{ point[3], color3 });

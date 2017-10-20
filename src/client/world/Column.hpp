@@ -17,6 +17,7 @@ public:
 
 	void setBlock(int x, int y, int z, unsigned int b);
 	unsigned int getBlock(int x, int y, int z) const;
+	
 	Chunk *getChunk(int y);
 	bool hasLoad() const;
 

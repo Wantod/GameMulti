@@ -43,7 +43,9 @@ void Column::setBlock(int x, int y, int z, unsigned int b)
 
 unsigned int Column::getBlock(int x, int y, int z) const
 {
-	return _chunks[y >> 4].getBlock(x, y & 0xF, z);
+	if (y >> 4 < _chunks.size() && y > 0)
+		return _chunks[y >> 4].getBlock(x, y & 0xF, z);
+	return 0;
 }
 
 

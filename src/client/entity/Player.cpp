@@ -159,7 +159,7 @@ void Player::render(const Camera *camera) {
 	tete.draw(model);
 }
 
-void Player::updateInput(float deltatime, const Camera *camera) {
+void Player::updateInput(float deltatime, const Camera *camera, const World *world) {
 	glm::vec3 dir = camera->get_front();
 	glm::vec3 dirD(0);
 	dir = glm::normalize(glm::vec3(dir.x, 0, dir.z));
@@ -219,6 +219,12 @@ void Player::updateInput(float deltatime, const Camera *camera) {
 	}
 
 	this->update(deltatime);
+
+	std::cout << world->getBlock(pos.x, pos.y, pos.z) << std::endl;
+	if (world->getBlock(pos.x, pos.y, pos.z) > 0) {
+		pos.y += 1;
+	}
+
 
 	if (pos.y == 0) {
 		vel.x = 0;

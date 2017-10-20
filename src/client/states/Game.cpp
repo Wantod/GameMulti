@@ -63,7 +63,7 @@ void Game::render(int fps)
 
 void Game::update(float deltatime)
 {
-	_player.updateInput(deltatime, _camera.get());
+	_player.updateInput(deltatime, _camera.get(), &_world);
 	if (!Input::isFocus() || Input::getKey(GLFW_KEY_ESCAPE) == 2) {
 		_gm->window->displayCursor(true);
 		menu_focus = true;

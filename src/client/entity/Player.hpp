@@ -4,6 +4,7 @@
 #include "../core/Mesh.hpp"
 #include "Entity.hpp"
 #include "../Camera.hpp"
+#include "../world/World.hpp"
 
 class Player : public Entity
 {
@@ -11,7 +12,7 @@ public:
 	Player();
 	~Player();
 	
-	void updateInput(float deltatime, const Camera *camera);
+	void updateInput(float deltatime, const Camera *camera, const World *world);
 
 	void update(float deltatime);
 	void render(const Camera *camera);
