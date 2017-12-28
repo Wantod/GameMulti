@@ -103,9 +103,9 @@ Player::~Player() {
 
 }
 
-void Player::update(float deltatime) {
+void Player::update(float deltatime, const World *world) {
 	acc = glm::vec3(0, -20, 0);
-	Entity::update(deltatime);
+	Entity::update(deltatime, world);
 	ResourceManager::get().text.RenderText("TEST " + std::to_string(glm::length(vel)), 10, 100, 1);
 	if (pos.y < 0) {
 		pos.y = 0;
@@ -218,7 +218,7 @@ void Player::updateInput(float deltatime, const Camera *camera, const World *wor
 		vel.z -= dirD.z * 4;
 	}
 
-	this->update(deltatime);
+	this->update(deltatime, world);
 
 	std::cout << world->getBlock(pos.x, pos.y, pos.z) << std::endl;
 	if (world->getBlock(pos.x, pos.y, pos.z) > 0) {
