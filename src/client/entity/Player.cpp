@@ -164,6 +164,7 @@ void Player::updateInput(float deltatime, const Camera *camera, const World *wor
 	glm::vec3 dirD(0);
 	dir = glm::normalize(glm::vec3(dir.x, 0, dir.z));
 	float speed = 5.f;
+	glm::vec3 posTmp = pos;
 
 	// deplacement X - Z
 	if (Input::getKey(GLFW_KEY_LEFT_SHIFT))
@@ -206,8 +207,7 @@ void Player::updateInput(float deltatime, const Camera *camera, const World *wor
 		if (_speedDeplacement > 1) _speedDeplacement = 1;
 		dirD = glm::normalize(dirD);
 		pos += dirD * speed * deltatime;
-	}
-	else {
+	} else {
 		_speedDeplacement -= deltatime;
 		if (_speedDeplacement < 0) _speedDeplacement = 0;
 	}
@@ -220,10 +220,14 @@ void Player::updateInput(float deltatime, const Camera *camera, const World *wor
 
 	this->update(deltatime, world);
 
-	std::cout << world->getBlock(pos.x, pos.y, pos.z) << std::endl;
-	if (world->getBlock(pos.x, pos.y, pos.z) > 0) {
-		pos.y += 1;
-	}
+	// std::cout << world->getBlock(pos.x, pos.y, pos.z) << std::endl;
+	if (world->getBlock((int)posTmp.x, (int)pos.y, (int)posTmp.z) > 0)
+		pos.y = posTmp.y;
+	if (world->getBlock(pos.x, posTmp.y, posTmp.z) > 0)
+		pos.x = posTmp.x;
+	if (world->getBlock(posTmp.x, posTmp.y, pos.z) > 0)
+		pos.z = posTmp.z;
+
 
 
 	if (pos.y == 0) {
