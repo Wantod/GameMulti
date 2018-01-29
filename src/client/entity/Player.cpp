@@ -107,10 +107,6 @@ void Player::update(float deltatime, const World *world) {
 	acc = glm::vec3(0, -20, 0);
 	Entity::update(deltatime, world);
 	ResourceManager::get().text.RenderText("TEST " + std::to_string(glm::length(vel)), 10, 100, 1);
-	if (pos.y < 0) {
-		pos.y = 0;
-		vel.y = 0;
-	}
 }
 
 void Player::render(const Camera *camera) {
@@ -202,6 +198,7 @@ void Player::updateInput(float deltatime, const Camera *camera, const World *wor
 	}
 	
 	// std::cout << pos.x << ":" << pos.y << std::endl;
+	/*
 	if (dirD.x != 0 && dirD.z != 0) {
 		_speedDeplacement += deltatime;
 		if (_speedDeplacement > 1) _speedDeplacement = 1;
@@ -211,30 +208,24 @@ void Player::updateInput(float deltatime, const Camera *camera, const World *wor
 		_speedDeplacement -= deltatime;
 		if (_speedDeplacement < 0) _speedDeplacement = 0;
 	}
-
+	*/
 	if (Input::getKey(GLFW_KEY_G) == 1) {
 		vel.x -= dirD.x * 4;
 		vel.y += 3;
 		vel.z -= dirD.z * 4;
 	}
 
-	this->update(deltatime, world);
-
+	/*
 	// std::cout << world->getBlock(pos.x, pos.y, pos.z) << std::endl;
+	
 	if (world->getBlock((int)posTmp.x, (int)pos.y, (int)posTmp.z) > 0)
 		pos.y = posTmp.y;
 	if (world->getBlock(pos.x, posTmp.y, posTmp.z) > 0)
 		pos.x = posTmp.x;
 	if (world->getBlock(posTmp.x, posTmp.y, pos.z) > 0)
 		pos.z = posTmp.z;
+		*/
 
-
-
-	if (pos.y == 0) {
-		vel.x = 0;
-		vel.z = 0;
-	} else {
-		vel.x -= vel.x * 0.10 * deltatime;
-		vel.z -= vel.z * 0.10 * deltatime;
-	}
+	vel_move += dirD * speed;
+	this->update(deltatime, world);
 }

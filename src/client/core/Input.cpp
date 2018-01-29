@@ -144,8 +144,9 @@ void InputManager::cleanKey()
 }
 
 /*
-** @param key: numero de la touche du clavier
-** return (-1) relache (0) est relacher (1) appuy (2) est appuyer
+	Recuperation des touche du clavier
+	@param key: numero de la touche du clavier
+	@return (-1) relache (0) est relacher (1) appuy (2) est appuyer
 */
 int8_t InputManager::getKey(int key) const
 {

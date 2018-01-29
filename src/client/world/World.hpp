@@ -37,6 +37,7 @@ public:
 
 	void setBlock(int x, int y, int z, unsigned int b);
 	unsigned int getBlock(int x, int y, int z) const;
+	glm::vec4 TraceRay(glm::vec3, glm::vec3, int max, bool last = false);
 
 private:
 	std::unordered_map<glm::ivec2, Column *> _map;

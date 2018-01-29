@@ -16,6 +16,7 @@ public:
 	void update(float deltatime, const World *world);
 	void render(const Camera *camera);
 
+
 protected:
 	float _speedTimeTmp;
 	bool _speed;

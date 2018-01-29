@@ -19,15 +19,18 @@ public:
 
 	void update(float deltatime, const World *world);
 	// virtual void render() = 0;
+	glm::vec3 collide(glm::vec3 _pos, glm::vec3 _vel, const World * world);
 
-	void collide(const World *world);
 protected:
 	glm::vec3 posTmp;
 	glm::vec3 pos;
 	glm::vec3 vel;
 	glm::vec3 acc;
+	glm::vec3 vel_move;
 
 	float masse;
+	bool ground = false;
+	bool flying = false;
 };
 
 #endif // !ENTITY_HPP

@@ -20,6 +20,7 @@
 #include "../Camera.hpp"
 #include "../entity/Player.hpp"
 #include "../world/World.hpp"
+#include "../../ini/server.hpp"
 
 class Game : public GameInterface
 {
@@ -48,6 +49,7 @@ private:
 	Shader &shader;
 	std::vector<Vertex> vertice;
 
+	Server _server;
 	// debug
 	bool debug = false;
 };
