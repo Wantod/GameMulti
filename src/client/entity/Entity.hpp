@@ -28,6 +28,7 @@ protected:
 	glm::vec3 acc;
 	glm::vec3 vel_move;
 
+	glm::vec3 vitess;
 	float masse;
 	bool ground = false;
 	bool flying = false;

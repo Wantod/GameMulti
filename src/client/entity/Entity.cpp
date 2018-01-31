@@ -21,8 +21,11 @@ void Entity::update(float deltatime, const World *world)
 	vel = vel + acc * deltatime;
 	glm::vec3 velocity = (vel + vel_move) * deltatime;
 
+
+	vitess = vel + vel_move;
 	vel_move = {0, 0, 0};
 	ground = false;
+
 
 	// Collision
 	pos = this->collide(pos, { velocity.x, 0, 0 }, world);

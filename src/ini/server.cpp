@@ -12,14 +12,26 @@ Server::~Server() {
 
 void Server::boucle()
 {
+	char data[255];
+	Sockets::Address addr;
+	
 	while (!_end) {
-		std::cout << "Super salut " << std::endl;
+		int n = _server.recv(&data, 254, addr);
+		if (n != -1) {
+			data[n] = '\0';
+			std::cout << "Serveur: " << data << std::endl;
+			std::string str("Bien reçu docteur !");
+			_server.send(str.c_str(), str.size(), addr);
+		}
 	}
 }
 
 void Server::run() {
 	_serverThread = std::make_unique<std::thread>([&]() {
 		_end = false;
+
+		_server.init();
+		_server.bind(8912U);
 		boucle();
 	});
 }

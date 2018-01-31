@@ -30,13 +30,24 @@ namespace Sockets {
 		return true;
 	}
 
-	uint32_t Address::getIp() {
+	inline uint32_t Address::getIp() const {
 		return ntohl(sin.sin_addr.s_addr);
 	}
 
-	uint16_t Address::getPort() {
+	inline uint16_t Address::getPort() const {
 		return ntohs(sin.sin_port);
 	}
+
+	std::string Address::toString() const {
+//		std::string test = this->GetByte(3) + '.' + GetByte(2) + '.' + GetByte(1) + '.' + GetByte(0) + ':' + this->getPort();
+		return std::string("");
+	}
+
+	unsigned char Address::GetByte(int n) const {
+		unsigned int ip = this->getIp();
+		return ((unsigned char*)&ip)[3 - n];
+	}
+
 }
 
 bool operator==(const Sockets::Address& a1, const Sockets::Address& a2)

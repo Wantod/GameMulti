@@ -12,7 +12,7 @@ UDPSocket::~UDPSocket() {
 bool UDPSocket::init() {
 	if (!Sockets::Start()) 
 	{
-		std::cout << "Erreur initialisation WinSock : " << Sockets::GetError();
+		std::cout << "Erreur initialisation WinSock : " << Sockets::GetError() << std::endl;
 		return false;
 	}
 
@@ -20,13 +20,13 @@ bool UDPSocket::init() {
 	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP); // ipv4, UDP
 	if (sock == INVALID_SOCKET)
 	{
-		std::cout << "Erreur initialisation socket : " << Sockets::GetError();
+		std::cout << "Erreur initialisation socket : " << Sockets::GetError() << std::endl;
 		return false;
 	}
 
 	if (!Sockets::SetNonBlocking(sock))
 	{
-		std::cout << "Erreur settings non bloquant : " << Sockets::GetError();
+		std::cout << "Erreur settings non bloquant : " << Sockets::GetError() << std::endl;
 		return false;
 	}
 
@@ -50,7 +50,7 @@ bool UDPSocket::bind(unsigned short port) {
 	
 	if (::bind(sock, reinterpret_cast<SOCKADDR *>(&server), sizeof(server)) == SOCKET_ERROR)
 	{
-		std::cout << "Erreur bind : " << Sockets::GetError();
+		std::cout << "Erreur bind : " << Sockets::GetError() << std::endl;
 		return false;
 	}
 

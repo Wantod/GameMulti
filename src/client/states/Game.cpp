@@ -27,12 +27,14 @@ Game::Game(GameManager &gm)
 	_camera = std::make_unique<Camera>();
 
 	_server.run();
+	_client.run();
 	std::cout << "Connection Serveur" << std::endl;
 }
 
 Game::~Game()
 {
 	_server.stop();
+	_client.stop();
 }
 
 void Game::render(int fps)

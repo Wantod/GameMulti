@@ -7,6 +7,7 @@
 # include <thread>
 # include <mutex>
 
+# include "../../ini/socket\UDPSocket.hpp"
 
 class ServerClient
 {
@@ -18,8 +19,18 @@ public:
 	void run();
 	void stop();
 
+	// recuperation des message a parser
+	// connection d'un joueur
+	// deconnection
+	// deplacement
+	// message
+	// bloc modification
+
 	std::unique_ptr<std::thread> _serverThread;
+
 protected:
+	UDPSocket _client;
+	std::mutex _mutexMsg;
 	std::atomic<bool> _end;
 };
 

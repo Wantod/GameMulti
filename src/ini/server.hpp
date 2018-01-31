@@ -7,6 +7,8 @@
 # include <thread>
 # include <mutex>
 
+# include "socket\UDPSocket.hpp"
+
 class Server
 {
 public:
@@ -18,8 +20,10 @@ public:
 	void stop();
 
 	std::unique_ptr<std::thread> _serverThread;
+
 protected:
 	std::atomic<bool> _end;
+	UDPSocket _server;
 };
 
 #endif // !SERVER_HPP

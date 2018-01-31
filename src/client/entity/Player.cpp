@@ -107,6 +107,13 @@ void Player::update(float deltatime, const World *world) {
 	acc = glm::vec3(0, -20, 0);
 	Entity::update(deltatime, world);
 	ResourceManager::get().text.RenderText("TEST " + std::to_string(glm::length(vel)), 10, 100, 1);
+	
+	//_speedDeplacement = -glm::length(glm::vec3 { vitess.x, 0, vitess.z });
+	if (glm::length(glm::vec3{ vitess.x, 0, vitess.z }) > 0)
+		_speedDeplacement = glm::length(glm::vec3{ vitess.x, 0, vitess.z }) / 6;
+	else if (_speedDeplacement > 0) {
+		_speedDeplacement = _speedDeplacement - 2 * deltatime;
+	}
 }
 
 void Player::render(const Camera *camera) {
@@ -114,7 +121,8 @@ void Player::render(const Camera *camera) {
 	corp.draw(model);
 	model = glm::translate(model, pos);
 	model = glm::rotate(model, -glm::radians(camera->getAlpha() + 90), glm::vec3(0, 1, 0));
-	
+
+
 	glm::mat4 model2 = glm::translate(model, glm::vec3(-0.16, 0, 0));
 	model2 = glm::translate(model2, glm::vec3(0, 0.2, 0)); // pour la rotation
 	model2 = glm::rotate(model2, _speedDeplacement * (float)(cos(glfwGetTime() * 6)), glm::vec3(1, 0, 0));
