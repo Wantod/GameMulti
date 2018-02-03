@@ -7,6 +7,7 @@
 # include <thread>
 # include <mutex>
 
+# include <unordered_map>
 # include "socket\UDPSocket.hpp"
 
 class Server
@@ -15,7 +16,7 @@ public:
 	Server();
 	~Server();
 	
-	void boucle();
+	void recv_thread();
 	void run();
 	void stop();
 
@@ -24,6 +25,7 @@ public:
 protected:
 	std::atomic<bool> _end;
 	UDPSocket _server;
+	std::unordered_map<Sockets::Address, int> _listClient;
 };
 
 #endif // !SERVER_HPP

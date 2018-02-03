@@ -9,7 +9,7 @@ UDPSocket::~UDPSocket() {
 	Sockets::Release();
 }
 
-bool UDPSocket::init() {
+bool UDPSocket::init(bool blocking) {
 	if (!Sockets::Start()) 
 	{
 		std::cout << "Erreur initialisation WinSock : " << Sockets::GetError() << std::endl;
@@ -24,7 +24,7 @@ bool UDPSocket::init() {
 		return false;
 	}
 
-	if (!Sockets::SetNonBlocking(sock))
+	if (blocking && !Sockets::SetNonBlocking(sock))
 	{
 		std::cout << "Erreur settings non bloquant : " << Sockets::GetError() << std::endl;
 		return false;

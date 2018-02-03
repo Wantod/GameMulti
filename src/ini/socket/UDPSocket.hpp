@@ -20,7 +20,7 @@ class UDPSocket
 
 		bool wait();
 		bool bind(unsigned short port = 8080);
-		bool init();
+		bool init(bool blocking = false);
 
 		Sockets::Address getSocket();
 	private:
