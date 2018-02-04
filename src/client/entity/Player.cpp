@@ -112,7 +112,8 @@ void Player::update(float deltatime, const World *world) {
 	if (glm::length(glm::vec3{ vitess.x, 0, vitess.z }) > 0)
 		_speedDeplacement = glm::length(glm::vec3{ vitess.x, 0, vitess.z }) / 6;
 	else if (_speedDeplacement > 0) {
-		_speedDeplacement = _speedDeplacement - 2 * deltatime;
+		_speedDeplacement = 0;
+		// _speedDeplacement = _speedDeplacement - 2 * deltatime;
 	}
 }
 

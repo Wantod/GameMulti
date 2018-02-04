@@ -7,6 +7,11 @@ namespace Sockets {
 		sin.sin_port = htons(0);
 	}
 
+	Address::Address(const Address &a)
+	{
+		sin = a.sin;
+	}
+
 	Address::~Address()
 	{
 	}
@@ -50,12 +55,20 @@ namespace Sockets {
 		return ((unsigned char*)&ip)[3 - n];
 	}
 
+	bool Address::operator==(const Sockets::Address& a2) const
+	{
+		if (sin.sin_addr.s_addr == a2.sin.sin_addr.s_addr
+			&& sin.sin_port == a2.sin.sin_port)
+			return true;
+		return false;
+	}
 }
-
+/*
 bool operator==(const Sockets::Address& a1, const Sockets::Address& a2)
 {
 	if (a1.sin.sin_addr.s_addr == a2.sin.sin_addr.s_addr
-		&& a1.sin.sin_port == a1.sin.sin_port)
+		&& a1.sin.sin_port == a2.sin.sin_port)
 		return true;
 	return false;
 }
+*/
