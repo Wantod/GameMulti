@@ -4,6 +4,10 @@
 # include "Sockets.hpp"
 # include <cstdint>
 
+# include <string>
+# include <string>
+# include <sstream>
+
 namespace Sockets {
 
 	class Address

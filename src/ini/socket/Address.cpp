@@ -39,12 +39,14 @@ namespace Sockets {
 	}
 
 	std::string Address::toString() const {
-//		std::string test = this->GetByte(3) + '.' + GetByte(2) + '.' + GetByte(1) + '.' + GetByte(0) + ':' + this->getPort();
-		return std::string("");
+		std::stringstream ss;
+		uint32_t ip = ntohl(sin.sin_addr.s_addr);
+		ss << ((ip >> 24) & 0xFF) << '.' << ((ip >> 16) & 0xFF) << '.' << ((ip >> 8) & 0xFF) << '.' << (ip & 0xFF) << ':' << this->getPort();
+		return ss.str();
 	}
 
 	unsigned char Address::GetByte(int n) const {
-		unsigned int ip = this->getIp();
+		uint32_t ip = this->getIp();
 		return ((unsigned char*)&ip)[3 - n];
 	}
 

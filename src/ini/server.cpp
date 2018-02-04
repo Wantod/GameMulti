@@ -19,6 +19,7 @@ void Server::boucle()
 		int n = _server.recv(&data, 254, addr);
 		if (n != -1) {
 			data[n] = '\0';
+			std::cout << "Address ip: " << addr.toString() << std::endl;
 			std::cout << "Serveur: " << data << std::endl;
 			std::string str("Bien reçu docteur !");
 			_server.send(str.c_str(), str.size(), addr);
