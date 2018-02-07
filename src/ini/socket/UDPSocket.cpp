@@ -107,3 +107,24 @@ bool UDPSocket::send(const void *data, std::size_t size, Sockets::Address &addr)
 
 	return true;
 }
+
+int UDPSocket::recv(Packet &packet, Sockets::Address & addr)
+{
+	int sinsize = sizeof(addr.sin);
+
+	int n = recvfrom(sock, (char*)(packet.getDataPtr()), static_cast<int>(packet.getSize()), 0, reinterpret_cast<sockaddr*>(&addr.sin), &sinsize);
+	if (n < 0)
+		return -1;
+	return n;
+}
+
+bool UDPSocket::send(const Packet &packet, Sockets::Address & addr)
+{
+	if (sendto(sock, packet.getData(), static_cast<int>(packet.getSize()), 0, reinterpret_cast<sockaddr*>(&addr.sin), sizeof(addr.sin)) < 0)
+	{
+		std::cout << "Erreur send()" << std::endl;
+		return false;
+	}
+
+	return true;
+}

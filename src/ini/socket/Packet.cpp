@@ -1,5 +1,46 @@
 #include "Packet.hpp"
 
+
+Packet::Packet() : _size(0)
+{
+	_data = new uint8_t[_size];
+}
+
+Packet::Packet(std::string & data)
+{
+	_data = new uint8_t[data.size() + 1];   //we need extra char for NUL
+	memcpy(_data, data.c_str(), data.size() + 1);
+	_size = data.size();
+}
+
+Packet::~Packet()
+{
+	delete[] _data;
+}
+
+void Packet::setSize(std::size_t size)
+{
+	delete[] _data;
+	_size = size;
+	_data = new uint8_t[_size];
+}
+
+std::size_t Packet::getSize() const
+{
+	return _size;
+}
+
+const char* Packet::getData() const
+{
+	return (char*)(_data);
+}
+
+uint8_t* Packet::getDataPtr()
+{
+	return _data;
+}
+
+/*
 Packet::Packet() :
 	m_readPos(0),
 	m_sendPos(0)
@@ -118,4 +159,5 @@ Packet& Packet::operator <<(const std::string& data) {
 		append(data.c_str(), length * sizeof(std::string::value_type));
 
 	return *this;
-}
+}*/
+

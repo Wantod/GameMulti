@@ -24,7 +24,7 @@ void Server::recv_thread()
 				_listClient.emplace(addr, 10);
 				std::cout << "Connection client ... " << _listClient.size() << " personne connecté" << std::endl;
 			}
-
+			std::cout << "Ip: " << addr.toString() << std::endl;
 			data[n] = '\0';
 			std::cout << "Serveur: " << data << std::endl;
 			std::string str("Bien reçu docteur !");

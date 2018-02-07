@@ -18,6 +18,8 @@ void ServerClient::boucle()
 	_client.send("Salut", 5, addrServer);
 	_client.send("Salut2", 6, addrServer);
 	_client.send("Salut3", 7, addrServer);
+	Packet pk(std::string("test TESFJ ZOEHFZ EPOFHZ EPOHZFP UIZE\n\n"));
+	_client.send(pk, addrServer);
 
 	Sockets::Address addr;
 	while (!_end) {
