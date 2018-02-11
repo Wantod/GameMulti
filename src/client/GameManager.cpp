@@ -64,15 +64,15 @@ void GameManager::run()
 		
 		_state->update((float)deltaTime);
 
-		if (minTime > deltaTime)
+		if (minTime < deltaTime)
 			minTime = deltaTime;
 
 		if (currentTime - fpsTime >= 1.0) {
-			fps = frame;
-			frame = 0;
-			fpsTime += 1.0;
+			fps = frame / (currentTime - fpsTime);
 			fps = (int) (1 / minTime);
-			minTime = 1000.f;
+			fpsTime = currentTime;
+			frame = 0;
+			minTime = 0.f;
 		}
 
 

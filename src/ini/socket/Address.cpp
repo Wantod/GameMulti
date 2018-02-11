@@ -1,4 +1,5 @@
 #include "Address.hpp"
+#include <sstream> 
 
 namespace Sockets {
 	Address::Address()
@@ -42,11 +43,12 @@ namespace Sockets {
 	inline uint16_t Address::getPort() const {
 		return ntohs(sin.sin_port);
 	}
-
+	
 	std::string Address::toString() const {
 		std::stringstream ss;
-		uint32_t ip = ntohl(sin.sin_addr.s_addr);
-		ss << ((ip >> 24) & 0xFF) << '.' << ((ip >> 16) & 0xFF) << '.' << ((ip >> 8) & 0xFF) << '.' << (ip & 0xFF) << ':' << this->getPort();
+//		uint32_t ip = ntohl(sin.sin_addr.s_addr);
+	//	ss << ((ip >> 24) & 0xFF) << '.' << ((ip >> 16) & 0xFF) << '.' << ((ip >> 8) & 0xFF) << '.' << (ip & 0xFF) << ':' << this->getPort();
+		ss << (int)this->GetByte(0) << '.' << (int)GetByte(1) << '.' << (int)GetByte(2) << '.' << (int)GetByte(3) << ':' << (int)this->getPort();
 		return ss.str();
 	}
 

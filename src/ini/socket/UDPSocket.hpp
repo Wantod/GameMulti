@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Sockets.hpp"
+#include "Packet.hpp"
 
 #include <iostream>
 #include <string>
@@ -17,6 +18,9 @@ class UDPSocket
 
 		int recv(void *data, std::size_t size, Sockets::Address &addr);
 		bool send(const void *data, std::size_t size, Sockets::Address &addr);
+
+		int recv(Packet &p, Sockets::Address &addr);
+		bool send(const Packet &ee, Sockets::Address &addr);
 
 		bool wait();
 		bool bind(unsigned short port = 8080);

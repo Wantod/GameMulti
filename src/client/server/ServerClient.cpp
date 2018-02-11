@@ -18,6 +18,13 @@ void ServerClient::boucle()
 	_client.send("Salut", 5, addrServer);
 	_client.send("Salut2", 6, addrServer);
 	_client.send("Salut3", 7, addrServer);
+	Packet pk(255);
+	std::string str = "PRENDRE UN TEST\n\n";
+	uint8_t id = 1;
+	pk.append(&id, 1);
+	pk.append(str);
+	
+	_client.send(pk, addrServer);
 
 	Sockets::Address addr;
 	while (!_end) {
@@ -31,11 +38,9 @@ void ServerClient::boucle()
 }
 
 void ServerClient::run() {
+	_client.init();
 	_serverThread = std::make_unique<std::thread>([&]() {
 		_end = false;
-
-		_client.init();
-		// _client.bind(8912U);
 		boucle();
 	});
 }
